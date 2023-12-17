@@ -15,8 +15,11 @@ def save_facts(facts: list, filename: str):
         json.dump(facts, json_file)
         
 def load_facts(mapping: dict, facts: list, filename: str):
-    with open(filename, "r") as json_file:
-        facts = json.load(json_file)
+    if os.path.exists(filename):
+        with open(filename, "r") as json_file:
+            facts = json.load(json_file)
+    else:
+        save_facts(facts, filename)
     return facts
 
 """RULES SECTION"""
@@ -36,12 +39,17 @@ def input_rules(mapping: dict, rules: list, complete_rules: list, rule: str):
         rules.append(new_rule)
        
 def save_rules(rules: list, filename: str):
+    
     with open(filename, "w") as json_file:
         json.dump(rules, json_file)
 
 def load_rules(mapping: dict, rules: list, filename: str):
-    with open(filename, "r") as json_file:
-        rules = json.load(json_file)
+    if os.path.exists(filename):
+        with open(filename, "r") as json_file:
+            rules = json.load(json_file)
+    else:
+        save_rules(rules, filename)
+
     return rules
 
 """NEW FACTS"""
